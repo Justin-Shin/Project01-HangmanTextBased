@@ -1,13 +1,26 @@
 var activeCursor;
+var hangman = {
+  currentTerminalInput: [],
+  currentTerminalInputString: ""
+
+}
 $( function() {
     $( "#draggable" ).draggable({
       containment:"body"
     });
   } );
 $(document).keyup(function(event){
+  console.log(event.which)
   activeCursor = $('.active')
-  if(event.which == 8) {
+  if(event.which == 8 && !activeCursor.prev().is('.permanent')) {
     activeCursor.prev().remove();
+    updateCurrentInput(null,false);
+  } else if (event.which == 37 && !activeCursor.prev().is('.permanent')) {
+    activeCursor.prev().addClass('active')
+    activeCursor.removeClass('active');
+  } else if (event.which == 39 && activeCursor.next()[0] !=null) {
+    activeCursor.next().addClass('active')
+    activeCursor.removeClass('active');
   }
 })
 $(document).keypress(function(event){
@@ -18,21 +31,16 @@ $(document).keypress(function(event){
     newLineAdd(activeCursor);
   } else {
     activeCursor.before('<div class ="text">'+String.fromCharCode(event.which)+'</div>')
+    updateCurrentInput(String.fromCharCode(event.which),true);
   }
-
-
-
-
-
-  //
-  // else if ( activeCursor.parent().children().length < 10) {
-  //   // activeCursor.text(String.fromCharCode(event.which));
-  //   activeCursor.before('<div class ="text active">'+String.fromCharCode(event.which)+'</div>');
-  // } else {
-  // activeCursor.after('<div class ="text active">'+String.fromCharCode(event.which)+'</div>');
-  // }
 })
-
 function newLineAdd(cursorLocation){
-  cursorLocation.parent().after('<div class="newLine"><div class="text">$</div><div class="text">&nbsp;</div><div class="text active"></div></div>')
+  cursorLocation.parent().after('<div class="newLine"><div class="text permanent">$</div><div class="text permanent">&nbsp;</div><div class="text active"></div></div>')
+}
+function updateCurrentInput(whichChar,add) {
+  if (add) {
+    hangman.currentTerminalInput.splice($('.active').index()-3,0,whichChar)
+  } else {
+    hangman.currentTerminalInput.splice($('.active').index()-3,1)
+  }
 }
