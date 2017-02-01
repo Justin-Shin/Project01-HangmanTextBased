@@ -17,7 +17,9 @@ var hangman = {
   wordIsArray: [],
   wordIsArrayPrint: [],
   guessedLetters:[],
-  correctArray: []
+  correctArray: [],
+  openingArray: [' reticulating splines',' solving for p=np',' help, I am trapped in a computer',' generatingAI',' ...',' ......',' digesting human brain tissue',' deleting System32'," Locating the required gigapixels to render..."," Spinning up the hamster..."," Shovelling coal into the server..."," Programming the flux capacitor"],
+  openingCounter: 0
 
 }
 $( function() { //this part makes the console screen draggable
@@ -102,13 +104,40 @@ function hangmanProgram(){
   activeCursor = $('.active')
   hangman.playBegan = true;
   printMessage("loading hangman.exe",true);
-  printMessage("Generating digital human in shell",true)
-  printMessage("Reticulating Splines",true)
-  printMessage("...",true)
-  printMessage("......",true)
-  printMessage("...",true)
-  printMessage("Would you like to play?")
+  var timerThing = setTimeout(oneLoad,500);
+  // printMessage("Would you like to play?")
 }
+function oneLoad(){
+  activeCursor = $('.active')
+  printMessage(hangman.openingArray[Math.floor(Math.random()*hangman.openingArray.length)],true);
+  if(hangman.openingCounter < 6){
+    hangman.openingCounter++
+    var timerThing = setTimeout(twoLoad,Math.floor(Math.random()*5)*100);
+  }
+  else {
+    hangman.openingCounter = 0
+    var timerThing02 = setTimeout(function(){printMessage("Would you like to play?")},200)
+  }
+}
+function twoLoad(){
+  activeCursor = $('.active')
+  // hangman.openingArray[Math.floor(Math.random()*hangman.openingArray.length)]
+  printMessage(hangman.openingArray[Math.floor(Math.random()*hangman.openingArray.length)],true);
+  if(hangman.openingCounter < 6){
+    hangman.openingCounter++
+    var timerThing = setTimeout(oneLoad,Math.floor(Math.random()*5)*100);
+  } else {
+    hangman.openingCounter = 0
+    var timerThing02 = setTimeout(function(){printMessage("Would you like to play?")},200)
+  }
+
+}
+
+
+
+
+
+
 function runItemHangman(textToRun,gameStarted,guessing,completedGame){
   activeCursor = $('active')
   activeCursor.removeClass('active')
