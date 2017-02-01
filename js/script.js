@@ -16,9 +16,9 @@ var hangman = {
   wordIs: null,
   wordIsArray: [],
   wordIsArrayPrint: [],
-  guessedLetters:[],
+  guessedLetters:[], // was going to put in a way to request to see which letters were guessed- it also would prevent a loss by guessing already used characters but didn't end up doing it
   correctArray: [],
-  openingArray: [' reticulating splines',' solving for p=np',' help, I am trapped in a computer',' generatingAI',' ...',' ......',' digesting human brain tissue',' deleting System32'," Locating the required gigapixels to render..."," Spinning up the hamster..."," Shovelling coal into the server..."," Programming the flux capacitor"],
+  openingArray: [' reticulating splines',' solving for p vs np',' help, I am trapped in a computer',' generatingAI',' ...',' ......',' digesting human brain tissue',' deleting System32'," Locating the required gigapixels to render..."," Spinning up the hamster..."," Shovelling coal into the server..."," Programming the flux capacitor"," wait, is it GIF or GIF? One is a hard G, the other soft.  Use your imagination"," shearing the alpacas", " collecting llama spit"," counting penguins"," to be honest I've already loaded, I'm just stalling for time"," your call is very important, please stay on the line"],
   openingCounter: 0
 
 }
@@ -130,14 +130,7 @@ function twoLoad(){
     hangman.openingCounter = 0
     var timerThing02 = setTimeout(function(){printMessage("Would you like to play?")},200)
   }
-
 }
-
-
-
-
-
-
 function runItemHangman(textToRun,gameStarted,guessing,completedGame){
   activeCursor = $('active')
   activeCursor.removeClass('active')
@@ -151,6 +144,7 @@ function runItemHangman(textToRun,gameStarted,guessing,completedGame){
     hangman.counterOfSomeSort= 0;
     hangman.wordIs= null;
     hangman.wordIsArray= [];
+    hangman.deathCounter = -1;
     hangman.wordIsArrayPrint= [];
     hangman.guessedLetters=[];
     hangman.correctArray= []
@@ -189,6 +183,15 @@ function runItemHangman(textToRun,gameStarted,guessing,completedGame){
       printMessage('',true)
       printMessage(hangman.wordIsArrayPrint.join(''),true)
       printMessage('',true)
+      hangman.gameStarted = false;
+      hangman.guessingMode = false;
+      hangman.gameCompleted = false;
+      hangman.counterOfSomeSort= 0;
+      hangman.wordIs= null;
+      hangman.wordIsArray= [];
+      hangman.wordIsArrayPrint= [];
+      hangman.guessedLetters=[];
+      hangman.correctArray= []
       printMessage('play again?')
       hangman.guessingMode = false;
       hangman.deathCounter = -1;
@@ -203,6 +206,15 @@ function runItemHangman(textToRun,gameStarted,guessing,completedGame){
         hangman.guessingMode = false;
         hangman.deathCounter=-1;
         printMessage('',true)
+        hangman.gameStarted = false;
+        hangman.guessingMode = false;
+        hangman.gameCompleted = false;
+        hangman.counterOfSomeSort= 0;
+        hangman.wordIs= null;
+        hangman.wordIsArray= [];
+        hangman.wordIsArrayPrint= [];
+        hangman.guessedLetters=[];
+        hangman.correctArray= []
         printMessage('Would you like to try again?')
       } else {
         printMessage('',true)
